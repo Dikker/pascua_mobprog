@@ -1,0 +1,7 @@
+# pascua_mobprog
+
+## Integrating and Making Images Dynamic in `newsfeed_card.dart`
+
+To integrate images into the application, the local image directory (`assets/images/`) was first registered under the `flutter: assets:` section in `pubspec.yaml` so Flutter bundles the image files into the build. Instead of hardcoding an `Image` widget directly inside the card layout, a dedicated and reusable `PostImage` stateless widget was created in `post_image.dart`. This widget accepts `imagePath` and `isNetwork` parameters, utilizing `ClipRRect`, `BoxFit.cover`, and responsive `ScreenUtil` dimensions to dynamically render either `Image.asset` for local files or `Image.network` for online URLs.
+
+To make each post in `NewsfeedCard` dynamic, the widget was parameterized with optional constructor properties including `hasImage`, `postImage`, and `isNetworkImage`. Inside the `build` method of `newsfeed_card.dart`, a conditional `if (widget.hasImage)` statement dynamically renders the `PostImage` widget using the specific file path or URL passed down from `NewsfeedScreen`. This approach allows each post card to display a unique image when available, while completely omitting the image area for text-only posts without leaving empty space.

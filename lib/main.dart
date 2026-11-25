@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pascua_mobprog/screens/home_screen.dart';
 import 'package:pascua_mobprog/screens/newsfeed_screen.dart';
+import 'package:pascua_mobprog/screens/notification_screen.dart';
 
 void main() {
   runApp(const MainApp());
@@ -19,10 +20,11 @@ class MainApp extends StatelessWidget {
       builder: (_, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: "Facebook Replication",
+          title: "BenStagram",
           initialRoute: "/home",
           routes: {
             "/newsfeed": (context) => const NewsfeedScreen(),
+            "/notification": (context) => const NotificationScreen(),
             "/home": (context) => const HomeScreen(),
           },
         );

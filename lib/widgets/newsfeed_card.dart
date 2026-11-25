@@ -11,6 +11,7 @@ class NewsfeedCard extends StatefulWidget {
   final String date;
   final int numOfLikes;
   final bool hasImage;
+  final bool hasPlaceholder;
   final String? postImage;
   final String? avatarImage;
   final bool isNetworkImage;
@@ -22,6 +23,7 @@ class NewsfeedCard extends StatefulWidget {
     required this.date,
     this.numOfLikes = 0,
     this.hasImage = false,
+    this.hasPlaceholder = false,
     this.postImage,
     this.avatarImage,
     this.isNetworkImage = false,
@@ -63,7 +65,7 @@ class _NewsfeedCardState extends State<NewsfeedCard> {
       backgroundColor: fbPrimary,
       child: Icon(
         Icons.person,
-        color: Colors.white,
+        color: fbTextColorWhite,
         size: ScreenUtil().setSp(radius),
       ),
     );
@@ -126,7 +128,15 @@ class _NewsfeedCardState extends State<NewsfeedCard> {
               fontSize: ScreenUtil().setSp(12),
               color: Colors.black,
             ),
-            if (widget.hasImage)
+            // Enhancement 1: Support Placeholder, Image, or None
+            if (widget.hasPlaceholder) ...[
+              SizedBox(height: ScreenUtil().setHeight(8)),
+              SizedBox(
+                height: ScreenUtil().setHeight(200),
+                width: double.infinity,
+                child: const Placeholder(),
+              ),
+            ] else if (widget.hasImage)
               PostImage(
                 imagePath: widget.postImage ?? 'assets/images/iron_man.jpg',
                 isNetwork: widget.isNetworkImage,

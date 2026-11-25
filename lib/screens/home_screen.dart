@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pascua_mobprog/constants.dart';
 import 'newsfeed_screen.dart';
+import 'notification_screen.dart';
 import '../widgets/custom_text.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -15,16 +16,24 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
   final PageController _pageController = PageController();
 
+  // Enhancement 2 & 4: Dynamic AppBar title & custom App Name placeholder
+  final List<String> _appBarTitles = [
+    'BenStagram',
+    'Notifications',
+    'Profile',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        shadowColor: fbTextColorWhite,
+        backgroundColor: fbTextColorWhite,
+        shadowColor: fbDarkPrimary,
         elevation: 2,
         title: CustomText(
-          text: 'Facebook',
+          text: _appBarTitles[_selectedIndex],
           fontSize: ScreenUtil().setSp(25),
-          color: fbPrimary,
+          color: _selectedIndex == 0 ? fbPrimary : fbDarkPrimary,
           fontFamily: 'Klavika',
           fontWeight: FontWeight.w700,
         ),
@@ -33,6 +42,8 @@ class _HomeScreenState extends State<HomeScreen> {
         controller: _pageController,
         children: const <Widget>[
           NewsfeedScreen(),
+          NotificationScreen(),
+          Center(child: Text('Profile Screen Placeholder')),
         ],
         onPageChanged: (page) {
           setState(() {
@@ -40,7 +51,9 @@ class _HomeScreenState extends State<HomeScreen> {
           });
         },
       ),
+      // Enhancement 3: Added more BottomNavigationBarItems
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: fbTextColorWhite,
         showUnselectedLabels: false,
         showSelectedLabels: false,
         onTap: _onTappedBar,
@@ -53,8 +66,13 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: Icon(Icons.notifications),
             label: 'Notifications',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
         ],
         selectedItemColor: fbPrimary,
+        unselectedItemColor: fbSecondary,
         currentIndex: _selectedIndex,
       ),
     );
